@@ -12,7 +12,7 @@ class _Page11State extends State<Page11> {
   int _total = 0;
   int _balance = 0;
   int _paid = 0;
-  final GoogleSheetsApi googleSheetsApi = GoogleSheetsApi('1exN1_l_qeVLlf8dv_ZqenMqaxTV6Bow28tkinX9Uhyo', 'assets/credentialsextra.json');
+  final GoogleSheetsApi googleSheetsApi = GoogleSheetsApi('', 'assets/credentialsextra.json');
 
   @override
   void initState() {
