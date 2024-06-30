@@ -12,7 +12,7 @@ class _Page8State extends State<Page8> {
   int _total = 0;
   int _balance = 0;
   int _paid = 0;
-  final GoogleSheetsApi googleSheetsApi = GoogleSheetsApi('1kkRwtFUt7YMua5glyu-8Ztif1AyGAaQ-Zbw1y_vK0sQ', 'assets/credentials.json');
+  final GoogleSheetsApi googleSheetsApi = GoogleSheetsApi('', 'assets/credentials.json');
 
   Future<void> _fetchPreviousBalance() async {
     final rows = await googleSheetsApi.getRows();
