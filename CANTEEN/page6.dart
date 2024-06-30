@@ -14,7 +14,7 @@ class _Page6State extends State<Page6> {
   int _totalreValue = 0;
   int _totalreCost = 0;
   int _balance = 0;
-  final GoogleSheetsApi googleSheetsApi = GoogleSheetsApi('1kkRwtFUt7YMua5glyu-8Ztif1AyGAaQ-Zbw1y_vK0sQ', 'assets/credentials.json');
+  final GoogleSheetsApi googleSheetsApi = GoogleSheetsApi('', 'assets/credentials.json');
 
   @override
   void initState() {
