@@ -14,7 +14,7 @@ class _Page3State extends State<Page3> {
   final TextEditingController _lawariyahoController = TextEditingController();
   final TextEditingController _othershoController = TextEditingController();
 
-  final GoogleSheetsApi googleSheetsApi = GoogleSheetsApi('1vGEqf1_jTVK3LV7v62y-uFMrzgFxW1BWslN8dhOwLKQ', 'assets/credentialshome.json');
+  final GoogleSheetsApi googleSheetsApi = GoogleSheetsApi('', 'assets/credentialshome.json');
 
   @override
   void dispose() {
