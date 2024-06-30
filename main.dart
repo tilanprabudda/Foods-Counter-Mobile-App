@@ -52,7 +52,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _balance = 0;
   bool _isConnected = true;
-  final GoogleSheetsApi googleSheetsApi = GoogleSheetsApi('1kkRwtFUt7YMua5glyu-8Ztif1AyGAaQ-Zbw1y_vK0sQ', 'assets/credentials.json');
+  final GoogleSheetsApi googleSheetsApi = GoogleSheetsApi('', 'assets/credentials.json');
 
   @override
   void initState() {
