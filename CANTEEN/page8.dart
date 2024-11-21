@@ -1,18 +1,66 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:FoodsCounter/API/google_sheets_api.dart';
+import 'google_sheets_api.dart';
 
 class Page8 extends StatefulWidget {
+  const Page8({super.key});
+
   @override
-  _Page8State createState() => _Page8State();
+  Page8State createState() => Page8State();
 }
 
-class _Page8State extends State<Page8> {
+class Page8State extends State<Page8> {
   final TextEditingController _paidController = TextEditingController();
   int _total = 0;
   int _balance = 0;
   int _paid = 0;
-  final GoogleSheetsApi googleSheetsApi = GoogleSheetsApi('', 'assets/credentials.json');
+  final GoogleSheetsApi googleSheetsApi = GoogleSheetsApi('API key', 'credentials.json');
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Payment Page For Canteen'),
+        backgroundColor: Colors.green,
+      ),
+      body: Container(
+        color: Colors.black45, 
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            TextField(
+              controller: _paidController,
+              decoration: const InputDecoration(
+                labelText: 'Paid Amount (Rs.)',
+                border: OutlineInputBorder(),
+                hintText: 'Enter the amount paid',
+                prefixIcon: Icon(Icons.payment),
+              ),
+              keyboardType: TextInputType.number,
+              style: const TextStyle(fontSize: 18, color: Colors.black),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () async {
+                await _submit();
+              },
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.green,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: const Text('Paid', style: TextStyle(fontSize: 18)),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   Future<void> _fetchPreviousBalance() async {
     final rows = await googleSheetsApi.getRows();
@@ -25,6 +73,8 @@ class _Page8State extends State<Page8> {
   }
 
   Future<void> _submit() async {
+    final BuildContext context = this.context; 
+
     await _fetchPreviousBalance();
 
     final int paidValue = int.tryParse(_paidController.text) ?? 0;
@@ -48,6 +98,7 @@ class _Page8State extends State<Page8> {
       final int totalreCost = args['totalreCost'] ?? 0;
       final DateTime? selectedDate = args['selectedDate'] as DateTime?;
       final String dayOfWeek = args['dayOfWeek'] ?? '';
+      final int prebalance = args['prebalance'] ?? 0;
 
       setState(() {
         _total = totalreCost;
@@ -76,6 +127,7 @@ class _Page8State extends State<Page8> {
         _paid,
         selectedDate != null ? DateFormat.yMMMd().format(selectedDate) : '',
         dayOfWeek,
+        prebalance,
       ]);
 
       Navigator.pushNamed(
@@ -102,49 +154,9 @@ class _Page8State extends State<Page8> {
           'paid': _paid,
           'selectedDate': selectedDate,
           'dayOfWeek': dayOfWeek,
+          'prebalance': prebalance,
         },
       );
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Payment Page For Canteen'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextField(
-              controller: _paidController,
-              decoration: InputDecoration(
-                labelText: 'Paid Amount (Rs.)',
-                border: OutlineInputBorder(),
-                hintText: 'Enter the amount paid',
-                prefixIcon: Icon(Icons.payment),
-              ),
-              keyboardType: TextInputType.number,
-              style: TextStyle(fontSize: 18),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _submit,
-              child: Text('Upload Data', style: TextStyle(fontSize: 18)),
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white, backgroundColor: Colors.blue,
-                padding: EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }
