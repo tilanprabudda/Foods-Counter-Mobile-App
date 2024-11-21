@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:FoodsCounter/API/google_sheets_api_home.dart';
+import 'package:FoodsCounter/google_sheets_api_home.dart';
 
 class Page3 extends StatefulWidget {
+  const Page3({super.key});
   @override
-  _Page3State createState() => _Page3State();
+  Page3State createState() => Page3State();
 }
 
-class _Page3State extends State<Page3> {
+class Page3State extends State<Page3> {
   DateTime? _selectedDate;
   final TextEditingController _srinhoppeshoController = TextEditingController();
   final TextEditingController _stringshoController = TextEditingController();
   final TextEditingController _lawariyahoController = TextEditingController();
   final TextEditingController _othershoController = TextEditingController();
 
-  final GoogleSheetsApi googleSheetsApi = GoogleSheetsApi('', 'assets/credentialshome.json');
+  final GoogleSheetsApi googleSheetsApi = GoogleSheetsApi('API Key', 'credentials.json');
 
   @override
   void dispose() {
@@ -49,7 +50,7 @@ class _Page3State extends State<Page3> {
         arguments: {},
       );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Please pick a date.'),
       ));
     }
@@ -81,9 +82,10 @@ class _Page3State extends State<Page3> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Used Page'),
-        backgroundColor: Colors.orange,
+        title: const Text('Home Used Page'),
+        backgroundColor: Colors.green,
       ),
+      backgroundColor: const Color(0xFFDFFFD6),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -91,67 +93,67 @@ class _Page3State extends State<Page3> {
           children: <Widget>[
             ElevatedButton(
               onPressed: _pickDate,
-              child: Text('Pick a Date'),
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white, backgroundColor: Colors.orange,
-                padding: EdgeInsets.symmetric(vertical: 16),
+                foregroundColor: Colors.white, backgroundColor: Colors.green,
+                padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
+              child: const Text('Pick a Date'),
             ),
             if (_selectedDate != null) ...[
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Text('Selected Date: ${DateFormat.yMMMd().format(_selectedDate!)}'),
               Text('Day of Week: ${_getDayOfWeek()}'),
             ],
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextField(
               controller: _srinhoppeshoController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Sringhoppes',
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.number,
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             TextField(
               controller: _stringshoController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Extra Sringhoppes Count',
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.number,
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             TextField(
               controller: _lawariyahoController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Lawariya',
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.number,
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             TextField(
               controller: _othershoController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Others',
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.number,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _submit,
-              child: Text('Submit'),
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white, backgroundColor: Colors.orange,
-                padding: EdgeInsets.symmetric(vertical: 16),
+                foregroundColor: Colors.white, backgroundColor: Colors.green,
+                padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
+              child: const Text('Submit'),
             ),
           ],
         ),
