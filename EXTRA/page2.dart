@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class Page2 extends StatefulWidget {
+  const Page2({super.key});
   @override
-  _Page2State createState() => _Page2State();
+  Page2State createState() => Page2State();
 }
 
-class _Page2State extends State<Page2> {
+class Page2State extends State<Page2> {
   DateTime? _selectedDate;
   final TextEditingController _srinhoppesexController = TextEditingController();
   final TextEditingController _stringsexController = TextEditingController();
   final TextEditingController _lawariyaexController = TextEditingController();
   final TextEditingController _othersexController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
 
   int _totalValue = 0;
   int _strhopval = 0;
@@ -42,7 +44,7 @@ class _Page2State extends State<Page2> {
   }
 
   void _calculateCosts(int srinhoppesexValue, int stringsexValue, int lawariyaexValue, int othersexValue) {
-    _totalValue = srinhoppesexValue * 50 + stringsexValue * 5 + lawariyaexValue * 50 + othersexValue;
+    _totalValue = srinhoppesexValue * value1 + stringsexValue * value2 + lawariyaexValue * value3 + othersexValue;
     _strhopval = srinhoppesexValue;
     _strhopvalall = stringsexValue;
     _lawval = lawariyaexValue;
@@ -54,6 +56,7 @@ class _Page2State extends State<Page2> {
     final int stringsexValue = int.tryParse(_stringsexController.text) ?? 0;
     final int lawariyaexValue = int.tryParse(_lawariyaexController.text) ?? 0;
     final int othersexValue = int.tryParse(_othersexController.text) ?? 0;
+    final String name = _nameController.text.trim();
 
     setState(() {
       _calculateCosts(srinhoppesexValue, stringsexValue, lawariyaexValue, othersexValue);
@@ -63,6 +66,7 @@ class _Page2State extends State<Page2> {
       context,
       '/page10',
       arguments: {
+        'name': name,
         'strhopval': _strhopval,
         'strhopvalall': _strhopvalall,
         'lawval': _lawval,
@@ -78,96 +82,105 @@ class _Page2State extends State<Page2> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Extra Production Page'),
+        title: const Text('Extra Production Page'),
         backgroundColor: Colors.green,
       ),
+      backgroundColor: const Color(0xFFDFFFD6),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            TextField(
+              controller: _nameController,
+              decoration: const InputDecoration(
+                labelText: 'Enter Name',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: _pickDate,
-              child: Text('Pick a date'),
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white, backgroundColor: Colors.blue,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
+              child: const Text('Pick a date'),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             if (_selectedDate != null)
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Selected Date:',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     DateFormat.yMMMd().format(_selectedDate!),
-                    style: TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16),
                   ),
-                  SizedBox(height: 10),
-                  Text(
+                  const SizedBox(height: 10),
+                  const Text(
                     'Day of Week:',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     _getDayOfWeek(),
-                    style: TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16),
                   ),
-                  Divider(),
+                  const Divider(),
                 ],
               ),
             TextField(
               controller: _srinhoppesexController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Sringhoppes Packets',
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.number,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextField(
               controller: _stringsexController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Extra Sringhoppes Count',
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.number,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextField(
               controller: _lawariyaexController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Lawariya',
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.number,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextField(
               controller: _othersexController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Others',
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.number,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _submit,
-              child: Text('Next'),
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white, backgroundColor: Colors.green,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
+              child: const Text('Next'),
             ),
           ],
         ),
