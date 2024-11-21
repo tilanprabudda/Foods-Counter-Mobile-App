@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class Page10 extends StatelessWidget {
+  const Page10({super.key});
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic>? args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
@@ -9,9 +10,9 @@ class Page10 extends StatelessWidget {
     if (args == null) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Extra Production Distribute Cost'),
+          title: const Text('Extra Production Distribute Cost'),
         ),
-        body: Center(
+        body: const Center(
           child: Text('No data available'),
         ),
       );
@@ -24,12 +25,14 @@ class Page10 extends StatelessWidget {
     final int strhopvalall = args['strhopvalall'] ?? 0;
     final int lawval = args['lawval'] ?? 0;
     final int otheval = args['otheval'] ?? 0;
+    final String name = args['name'] ?? 0;
 
-    void _submit() {
+    void submit() {
       Navigator.pushNamed(
         context,
         '/page11',
         arguments: {
+          'name': name,
           'strhopval': strhopval,
           'strhopvalall': strhopvalall,
           'lawval': lawval,
@@ -43,8 +46,8 @@ class Page10 extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Extra Production Distribute Cost'),
-        backgroundColor: Colors.blue,
+        title: const Text('Extra Production Distribute Cost'),
+        backgroundColor: Colors.green,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -56,29 +59,29 @@ class Page10 extends StatelessWidget {
               if (selectedDate != null)
                 Text(
                   'Date: ${DateFormat.yMMMd().format(selectedDate)}',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.green),
                 ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
                 'Day of Week: $dayOfWeek',
-                style: TextStyle(fontSize: 18),
+                style: const TextStyle(fontSize: 18, color: Colors.green),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Text(
                 'Total Value: Rs. $totalValue',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.green),
+                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.green),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               ElevatedButton(
-                onPressed: _submit,
-                child: Text('Next', style: TextStyle(fontSize: 18)),
+                onPressed: submit,
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white, backgroundColor: Colors.green,
-                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
+                child: const Text('Next', style: TextStyle(fontSize: 18)),
               ),
             ],
           ),
