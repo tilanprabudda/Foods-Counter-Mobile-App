@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:FoodsCounter/API/google_sheets_api_extra.dart';
+import 'package:FoodsCounter/google_sheets_api_extra.dart';
 import 'package:intl/intl.dart';
 
 class Page11 extends StatefulWidget {
+  const Page11({super.key});
   @override
-  _Page11State createState() => _Page11State();
+  Page11State createState() => Page11State();
 }
 
-class _Page11State extends State<Page11> {
+class Page11State extends State<Page11> {
   final TextEditingController _paidController = TextEditingController();
-  int _total = 0;
+  final int _total = 0;
   int _balance = 0;
   int _paid = 0;
-  final GoogleSheetsApi googleSheetsApi = GoogleSheetsApi('', 'assets/credentialsextra.json');
+  final GoogleSheetsApi googleSheetsApi = GoogleSheetsApi('API Key', 'credentials.json');
 
   @override
   void initState() {
@@ -42,6 +43,7 @@ class _Page11State extends State<Page11> {
       final int totalValue = args['totalValue'] ?? 0;
       final DateTime? selectedDate = args['selectedDate'] as DateTime?;
       final String dayOfWeek = args['dayOfWeek'] ?? '';
+      final String name = args['name'] ?? '';
 
       setState(() {
         _balance = totalValue - paidValue + _balance;
@@ -59,6 +61,7 @@ class _Page11State extends State<Page11> {
         _paid,
         selectedDate != null ? DateFormat.yMMMd().format(selectedDate) : '',
         dayOfWeek,
+        name,
       ]);
 
       Navigator.pushNamed(
@@ -73,7 +76,7 @@ class _Page11State extends State<Page11> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Extra Production Payment'),
+        title: const Text('Extra Production Payment'),
         backgroundColor: Colors.green,
       ),
       body: Padding(
@@ -84,24 +87,24 @@ class _Page11State extends State<Page11> {
           children: <Widget>[
             TextField(
               controller: _paidController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Paid Amount',
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.number,
-              style: TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _submit,
-              child: Text('Submit'),
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white, backgroundColor: Colors.green,
-                padding: EdgeInsets.symmetric(vertical: 16),
+                padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
+              child: const Text('Submit'),
             ),
           ],
         ),
