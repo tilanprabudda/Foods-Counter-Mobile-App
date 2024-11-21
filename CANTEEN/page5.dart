@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class Page5 extends StatelessWidget {
+  const Page5({super.key});
+
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic>? args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
@@ -9,9 +11,14 @@ class Page5 extends StatelessWidget {
     if (args == null) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Distribute Cost For Canteen'),
+          title: const Text('Distribute Cost For Canteen'),
+          backgroundColor: Colors.black, 
+          titleTextStyle: const TextStyle(
+            color: Colors.white, 
+            fontSize: 20, 
+          ),
         ),
-        body: Center(
+        body: const Center(
           child: Text('No data available'),
         ),
       );
@@ -21,16 +28,16 @@ class Page5 extends StatelessWidget {
     final int lawariyaCost = args['lawariyaCost'] ?? 0;
     final int coconutCost = args['coconutCost'] ?? 0;
     final int totalCost = args['totalCost'] ?? 0;
-    final int totalProfit = args['totalProft'] ?? 0;
+    final int totalProfit = args['totalProfit'] ?? 0; 
     final int totalValue = args['totalValue'] ?? 0;
-    final DateTime? selectedDate = args['selectedDate'] as DateTime?;
+    final DateTime? selectedDate = args['_lastUpdateDate'] as DateTime?;
     final String dayOfWeek = args['dayOfWeek'] ?? '';
     final int strhopval = args['strhopval'] ?? 0;
     final int strhopvalall = args['strhopvalall'] ?? 0;
     final int lawval = args['lawval'] ?? 0;
     final int otheval = args['otheval'] ?? 0;
 
-    void _submit() {
+    void submit() {
       Navigator.pushNamed(
         context,
         '/page6',
@@ -53,7 +60,8 @@ class Page5 extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Distribute Cost For Canteen'),
+        title: const Text('Distribute Cost For Canteen'),
+        backgroundColor: Colors.green,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -75,36 +83,36 @@ class Page5 extends StatelessWidget {
                       if (selectedDate != null)
                         Text(
                           'Date: ${DateFormat.yMMMd().format(selectedDate)}',
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                         ),
-                      SizedBox(height: 8),
-                      Text('Day of Week: $dayOfWeek', style: TextStyle(fontSize: 16)),
-                      SizedBox(height: 8),
-                      Text('Stringhoppes Cost is Rs.: $stringCost', style: TextStyle(fontSize: 16)),
-                      Text('Lawariya Cost is Rs.: $lawariyaCost', style: TextStyle(fontSize: 16)),
-                      Text('Coconut Cost is Rs.: $coconutCost', style: TextStyle(fontSize: 16)),
-                      SizedBox(height: 16),
-                      Divider(height: 1, color: Colors.grey),
-                      SizedBox(height: 16),
-                      Text('Total Cost: Rs. $totalCost', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                      Text('Total Value: Rs. $totalValue', style: TextStyle(fontSize: 16)),
-                      Text('Total Profit: Rs. $totalProfit', style: TextStyle(fontSize: 16)),
+                      const SizedBox(height: 8),
+                      Text('Day of the sale: $dayOfWeek', style: const TextStyle(fontSize: 16)),
+                      const SizedBox(height: 8),
+                      Text('Stringhoppes Packets Distribute count is: $strhopval', style: const TextStyle(fontSize: 16)),
+                      Text('More Stringhoppes Distribute count is: $strhopvalall', style: const TextStyle(fontSize: 16)),
+                      Text('Lawariya Distribute count is: $lawval', style: const TextStyle(fontSize: 16)),
+                      Text('Others Distribute count is: $otheval', style: const TextStyle(fontSize: 16)),
+                      const SizedBox(height: 16),
+                      const Divider(height: 1, color: Colors.grey),
+                      const SizedBox(height: 16),
+                      Text('Total Value: Rs. $totalValue', style: const TextStyle(fontSize: 16)),
+                      const SizedBox(height: 8),
                     ],
                   ),
                 ),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               ElevatedButton(
-                onPressed: _submit,
-                child: Text('Next', style: TextStyle(fontSize: 18)),
+                onPressed: submit,
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
-                  backgroundColor: Colors.blue,
-                  padding: EdgeInsets.symmetric(vertical: 16),
+                  backgroundColor: Colors.green,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
+                child: const Text('Next', style: TextStyle(fontSize: 18)),
               ),
             ],
           ),
