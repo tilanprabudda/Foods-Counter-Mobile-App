@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:FoodsCounter/API/google_sheets_api.dart';
+import 'google_sheets_api.dart';
 
 class Page6 extends StatefulWidget {
+  const Page6({super.key});
   @override
-  _Page6State createState() => _Page6State();
+  Page6State createState() => Page6State();
 }
 
-class _Page6State extends State<Page6> {
+class Page6State extends State<Page6> {
   final TextEditingController _srinhoppesreController = TextEditingController();
   final TextEditingController _stringsreController = TextEditingController();
   final TextEditingController _lawariyareController = TextEditingController();
@@ -14,7 +15,8 @@ class _Page6State extends State<Page6> {
   int _totalreValue = 0;
   int _totalreCost = 0;
   int _balance = 0;
-  final GoogleSheetsApi googleSheetsApi = GoogleSheetsApi('', 'assets/credentials.json');
+  int _needtopay = 0;
+  final GoogleSheetsApi googleSheetsApi = GoogleSheetsApi('API Key', 'credentials.json');
 
   @override
   void initState() {
@@ -33,12 +35,25 @@ class _Page6State extends State<Page6> {
   }
 
   void _submit() {
-    final int srinhoppesreValue = int.tryParse(_srinhoppesreController.text) ?? 0;
-    final int stringsreValue = int.tryParse(_stringsreController.text) ?? 0;
-    final int lawariyareValue = int.tryParse(_lawariyareController.text) ?? 0;
-    final int othersreValue = int.tryParse(_othersreController.text) ?? 0;
+    
+    final int srinhoppesreValue = _srinhoppesreController.text.isNotEmpty
+        ? int.tryParse(_srinhoppesreController.text) ?? 0
+        : 0;
 
-    final Map<String, dynamic>? args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
+    final int stringsreValue = _stringsreController.text.isNotEmpty
+        ? int.tryParse(_stringsreController.text) ?? 0
+        : 0;
+
+    final int lawariyareValue = _lawariyareController.text.isNotEmpty
+        ? int.tryParse(_lawariyareController.text) ?? 0
+        : 0;
+
+    final int othersreValue = _othersreController.text.isNotEmpty
+        ? int.tryParse(_othersreController.text) ?? 0
+        : 0;
+
+    final Map<String, dynamic>? args =
+    ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
 
     if (args != null) {
       final int strhopval = args['strhopval'] ?? 0;
@@ -55,8 +70,12 @@ class _Page6State extends State<Page6> {
       final String dayOfWeek = args['dayOfWeek'] ?? '';
 
       setState(() {
-        _totalreValue = srinhoppesreValue * 50 + stringsreValue * 5 + lawariyareValue * 50 + othersreValue;
+        _totalreValue = srinhoppesreValue * value1 +
+            stringsreValue * value2 +
+            lawariyareValue * value3 +
+            othersreValue;
         _totalreCost = totalValue - _totalreValue;
+        _needtopay = _totalreCost + _balance;
       });
 
       Navigator.pushNamed(
@@ -80,17 +99,20 @@ class _Page6State extends State<Page6> {
           'stringsreValue': stringsreValue,
           'lawariyareValue': lawariyareValue,
           'othersreValue': othersreValue,
-          'balance': _balance
+          'prebalance': _balance,
+          'needtopay': _needtopay,
         },
       );
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Return Page For Canteen'),
+        title: const Text('Return Page For Canteen'),
+        backgroundColor: Colors.green,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -110,46 +132,47 @@ class _Page6State extends State<Page6> {
                   children: <Widget>[
                     TextField(
                       controller: _srinhoppesreController,
-                      decoration: InputDecoration(labelText: 'Sringhoppes Packet'),
+                      decoration: const InputDecoration(labelText: 'Sringhoppes Packet'),
                       keyboardType: TextInputType.number,
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     TextField(
                       controller: _stringsreController,
-                      decoration: InputDecoration(labelText: 'Extra Sringhoppes Count'),
+                      decoration: const InputDecoration(labelText: 'Extra Sringhoppes Count'),
                       keyboardType: TextInputType.number,
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     TextField(
                       controller: _lawariyareController,
-                      decoration: InputDecoration(labelText: 'Lawariya'),
+                      decoration: const InputDecoration(labelText: 'Lawariya'),
                       keyboardType: TextInputType.number,
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     TextField(
                       controller: _othersreController,
-                      decoration: InputDecoration(labelText: 'Others'),
+                      decoration: const InputDecoration(labelText: 'Others'),
                       keyboardType: TextInputType.number,
                     ),
                   ],
                 ),
               ),
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
                 _submit();
               },
-              child: Text('Next', style: TextStyle(fontSize: 18)),
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,
-                backgroundColor: Colors.blue,
-                padding: EdgeInsets.symmetric(vertical: 16),
+                backgroundColor: Colors.green,
+                padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
+              child: const Text('Next', style: TextStyle(fontSize: 18)),
             ),
+
           ],
         ),
       ),
