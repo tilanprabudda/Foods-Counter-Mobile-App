@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class Page7 extends StatelessWidget {
+  const Page7({super.key});
+
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic>? args =
@@ -10,9 +12,9 @@ class Page7 extends StatelessWidget {
     if (args == null) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Canteen Return Cost'),
+          title: const Text('Canteen Return Cost'),
         ),
-        body: Center(
+        body: const Center(
           child: Text('No data available'),
         ),
       );
@@ -30,15 +32,16 @@ class Page7 extends StatelessWidget {
     final int lawariyaCost = args['lawariyaCost'] ?? 0;
     final int coconutCost = args['coconutCost'] ?? 0;
     final int totalCost = args['totalCost'] ?? 0;
-    final int totalProft = args['totalProft'] ?? 0;
+    final int totalProfit = args['totalProfit'] ?? 0;
     final int totalValue = args['totalValue'] ?? 0;
     final int srinhoppesreValue = args['srinhoppesreValue'] ?? 0;
     final int stringsreValue = args['stringsreValue'] ?? 0;
     final int lawariyareValue = args['lawariyareValue'] ?? 0;
     final int othersreValue = args['othersreValue'] ?? 0;
-    final int balanceValue = args['balance'] ?? 0;
+    final int prebalance = args['prebalance'] ?? 0;
+    final int needtopay = args['needtopay'] ?? 0;
 
-    void _submit() {
+    void submit() {
       Navigator.pushNamed(
         context,
         '/page8',
@@ -51,7 +54,7 @@ class Page7 extends StatelessWidget {
           'lawariyaCost': lawariyaCost,
           'coconutCost': coconutCost,
           'totalCost': totalCost,
-          'totalProft': totalProft,
+          'totalProfit': totalProfit,
           'totalValue': totalValue,
           'srinhoppesreValue': srinhoppesreValue,
           'stringsreValue': stringsreValue,
@@ -60,13 +63,15 @@ class Page7 extends StatelessWidget {
           'totalreCost': totalreCost,
           'selectedDate': selectedDate,
           'dayOfWeek': dayOfWeek,
+          'prebalance': prebalance,
         },
       );
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Today Sells'),
+        title: const Text('Today Sells'),
+        backgroundColor: Colors.green,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -87,31 +92,36 @@ class Page7 extends StatelessWidget {
                     children: <Widget>[
                       if (selectedDate != null)
                         Text(
-                          'Date: ${DateFormat.yMMMd().format(selectedDate!)}',
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          'Date: ${DateFormat.yMMMd().format(selectedDate)}',
+                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                         ),
-                      SizedBox(height: 8),
-                      Text('Day of Week: $dayOfWeek', style: TextStyle(fontSize: 16)),
-                      SizedBox(height: 8),
-                      Text('Total Day Sell: Rs. $totalreCost', style: TextStyle(fontSize: 16)),
-                      SizedBox(height: 8),
-                      Text('Previous Balance in : Rs. $balanceValue', style: TextStyle(fontSize: 16)),
+                      const SizedBox(height: 8),
+                      Text('Day of Week: $dayOfWeek', style: const TextStyle(fontSize: 16)),
+                      const SizedBox(height: 8),
+                      Text('Total Day Sell: Rs. $totalreCost', style: const TextStyle(fontSize: 16)),
+                      const SizedBox(height: 8),
+                      Text('Previous Balance in : Rs. $prebalance', style: const TextStyle(fontSize: 16)),
+                      const SizedBox(height: 16),
+                      const Divider(height: 1, color: Colors.grey),
+                      const SizedBox(height: 16),
+                      Text('Total: Rs. $needtopay', style: const TextStyle(fontSize: 16)),
+                      const SizedBox(height: 8),
                     ],
                   ),
                 ),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               ElevatedButton(
-                onPressed: _submit,
-                child: Text('Next', style: TextStyle(fontSize: 18)),
+                onPressed: submit,
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
-                  backgroundColor: Colors.blue,
-                  padding: EdgeInsets.symmetric(vertical: 16),
+                  backgroundColor: Colors.green,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
+                child: const Text('Next', style: TextStyle(fontSize: 18)),
               ),
             ],
           ),
